@@ -1,47 +1,85 @@
-# EVSolutions — site statique
+# EVSolutions Website
 
-Site vitrine monopage en français pour EVSolutions, construit avec HTML5, CSS3, JavaScript vanilla et un endpoint `contact.php` compatible PHP 8.
+A focused French-language client website presenting electric-vehicle charging solutions in Morocco and guiding visitors toward a quotation request.
 
-## Déploiement cPanel
+**Live website:** [evsolutions.ma](https://evsolutions.ma)
 
-1. Ouvrir **File Manager** dans cPanel.
-2. Envoyer tous les fichiers à la racine du domaine ou du sous-domaine : `index.html`, `style.css`, `script.js`, `contact.php` et `README.md`.
-3. Vérifier que PHP 8 ou supérieur est sélectionné dans **Select PHP Version**.
-4. Ouvrir le site sur le domaine public et vérifier que les fichiers CSS/JS se chargent correctement.
-5. Tester `contact.php` depuis le domaine public avec le formulaire, puis vérifier que la réponse affichée est bien un message JSON interprété par le JavaScript. Certains hébergeurs désactivent `mail()` en environnement de prévisualisation.
+> **Status:** delivered client website. This repository demonstrates a small production website, not a SaaS product or charging-management platform.
 
-## Changer l'email de contact
+## Purpose
 
-Modifier la variable `$to` dans `contact.php`. Mettre aussi à jour les métadonnées `email` du JSON-LD dans `index.html` si l'adresse publique change.
+The website gives residential and professional visitors a clear path through:
 
-## Changer le numéro WhatsApp ou téléphone
+- EV charging equipment presentation;
+- installation-oriented service information;
+- use cases for homes, companies, hotels, residences, and fleets;
+- telephone and WhatsApp contact actions;
+- a server-validated quotation form.
 
-Dans `index.html`, remplacer les valeurs `+212786749186` et `212786749186` dans les liens `tel:` et `https://wa.me/`. Mettre également à jour le champ `telephone` du JSON-LD.
+Claims, certifications, product characteristics, and commercial details should be changed only when supported by current client documentation.
 
-## Images et logos
+## Technology
 
-Aucun fichier JPG, PNG ou SVG n’est inclus, car les fichiers binaires ne sont pas pris en charge dans ce livrable. Les visuels produit et logos sont donc rendus en HTML/CSS. Pour ajouter de vraies images plus tard, héberger les fichiers côté serveur puis mettre à jour les emplacements correspondants dans `index.html` et les styles dans `style.css`.
+- semantic HTML5;
+- responsive CSS;
+- small vanilla JavaScript interactions;
+- PHP 8 contact endpoint;
+- JSON-LD and standard page metadata;
+- no framework, database, build chain, or runtime dependency manager.
 
-## Mettre à jour la spécification
+## Repository structure
 
-- Si des images sont ajoutées ultérieurement, garder des chemins relatifs.
-- Ne pas ajouter de certifications, statistiques, avis clients ou déclarations de distribution officielle sans preuve vérifiable.
-- Ne pas promettre une conformité ONEE ferme sans audit technique et validation réglementaire.
-- Les seules animations prévues sont : grille énergétique du hero, reveal au scroll avec IntersectionObserver et spotlight desktop des cartes produit.
+```text
+index.html    page content, metadata, and structured data
+style.css     layout, visual system, and responsive behavior
+script.js     navigation, reveal behavior, and form interaction
+contact.php   server-side validation and contact delivery
+```
 
-## Placeholders à personnaliser
+## Local review
 
-- URL canonique `https://www.evsolutions.ma/` dans `index.html`.
-- Email destinataire `contact@evsolutions.ma` dans `contact.php`.
-- Numéro téléphone/WhatsApp `+212786749186`.
-- Visuels actuels générés en CSS, sans fichiers binaires.
+The static interface can be previewed with:
 
-## Dépannage mail
+```bash
+python -m http.server 8080
+```
 
-Pour tester `contact.php`, envoyer le formulaire depuis la page après plus de 4 secondes, avec le champ anti-spam masqué vide. Le script doit toujours répondre en JSON. Si le formulaire retourne une erreur serveur :
+Open `http://localhost:8080`. The PHP form requires a PHP-capable server and must be tested separately.
 
-1. Vérifier que la fonction PHP `mail()` est autorisée par l'hébergeur.
-2. Utiliser une adresse `From` appartenant au domaine hébergé, par exemple `no-reply@votre-domaine.ma`.
-3. Configurer SPF, DKIM et DMARC dans la zone DNS.
-4. Consulter les logs cPanel ou demander à l'hébergeur si l'envoi SMTP authentifié est requis.
-5. Si nécessaire, remplacer `mail()` par une bibliothèque SMTP compatible PHP 8, par exemple PHPMailer, en conservant la validation serveur existante.
+## Deployment
+
+The production version is designed for a standard cPanel document root:
+
+1. upload `index.html`, `style.css`, `script.js`, and `contact.php`;
+2. select a supported PHP 8 version;
+3. verify CSS and JavaScript assets;
+4. submit the quotation form from the public HTTPS domain;
+5. verify the JSON response, message delivery, and spam controls;
+6. check the canonical URL and structured-data values.
+
+## Configuration
+
+Before a deployment or ownership change, review:
+
+- the canonical production URL in `index.html`;
+- public telephone and WhatsApp links;
+- structured-data contact values;
+- the destination address and sender policy in `contact.php`;
+- SPF, DKIM, and DMARC for the sending domain.
+
+Keep operational addresses and contact details in the source only when the client has approved their public use.
+
+## Security and maintenance
+
+- The server endpoint validates required fields and returns JSON.
+- Hosting-level rate limiting and authenticated SMTP are preferable to relying only on PHP `mail()`.
+- No analytics, testimonials, certifications, performance numbers, or distribution claims should be added without evidence and client approval.
+- Production form behavior must be retested after PHP, DNS, or email-policy changes.
+
+## Scope boundary
+
+This repository contains a simple commercial presentation website. It does not control chargers, process payments, manage energy consumption, provide remote diagnostics, or claim regulatory approval beyond evidence explicitly supplied by the client.
+
+## License
+
+Client-facing source code is not licensed for public reuse. All rights reserved.
